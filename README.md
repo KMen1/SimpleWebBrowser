@@ -1,2 +1,2 @@
 # SimpleWebBrowser
-A Simple Web Browser Written in CSharp(.NET Core)
+A Simple Web Browser Written in CSharp(.NET FrameWork)
