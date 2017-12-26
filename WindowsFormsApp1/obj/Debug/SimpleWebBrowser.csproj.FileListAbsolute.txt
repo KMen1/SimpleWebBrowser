@@ -1,0 +1,10 @@
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\SimpleWebBrowser.csprojResolveAssemblyReference.cache
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\SimpleWebBrowser.csproj.GenerateResource.Cache
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\SimpleWebBrowser.csproj.CoreCompileInputs.cache
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Oli\Documents\Visual Studio 2017\Projects\SimpleWebBrowser\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

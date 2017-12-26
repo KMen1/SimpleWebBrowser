@@ -270,7 +270,7 @@
             // 
             this.kilépésToolStripMenuItem.BackColor = System.Drawing.Color.Gray;
             this.kilépésToolStripMenuItem.Name = "kilépésToolStripMenuItem";
-            this.kilépésToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.kilépésToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.kilépésToolStripMenuItem.Text = "Exit";
             this.kilépésToolStripMenuItem.Click += new System.EventHandler(this.kilépésToolStripMenuItem_Click);
             // 
@@ -297,7 +297,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(408, 53);
+            this.label3.Location = new System.Drawing.Point(408, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
             this.label3.TabIndex = 20;

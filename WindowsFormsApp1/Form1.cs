@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,28 +18,36 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-
-        WebBrowser web = new WebBrowser();
+        ChromiumWebBrowser chrome;
         int i = 0;
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            web = new WebBrowser();
-            web.ScriptErrorsSuppressed = true;
-            web.Dock = DockStyle.Fill;
-            web.Visible = true;
-            web.DocumentCompleted += Web_DocumentCompleted;
+            CefSettings settings = new CefSettings();
+            Cef.Initialize(settings);
+            chrome = new ChromiumWebBrowser("https://google.com");
+            chrome.Dock = DockStyle.Fill;
+            chrome.AddressChanged += Chrome_AddressChanged;
+            chrome.Visible = true;
+            //chrome.Load = Web_DocumentCompleted;
             tabControl1.TabPages.Add("New Tab");
             tabControl1.SelectTab(i);
-            tabControl1.SelectedTab.Controls.Add(web);
+            tabControl1.SelectedTab.Controls.Add(chrome);
             i += 1;
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://google.com");
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://google.com");
+        }
+
+        private void Chrome_AddressChanged(object sender, AddressChangedEventArgs e)
+        {
+            Invoke(new MethodInvoker(() => {
+                textBox1.Text = e.Address;
+            }));
         }
 
         private void Web_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            tabControl1.SelectedTab.Text = ((WebBrowser)tabControl1.SelectedTab.Controls[0]).DocumentTitle;
+            tabControl1.SelectedTab.Text = ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Text;
             button1.Enabled = true;
             button2.Enabled = true;
             button3.Enabled = true;
@@ -57,41 +67,48 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate(textBox1.Text);
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load(textBox1.Text);
             //textBox1.Text = ("");
-            button1.Enabled = false;
-            textBox1.Enabled = false;
+            //button1.Enabled = false;
+            //textBox1.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
-                toolStripComboBox1.Items.Add(web.Url);
+                toolStripComboBox1.Items.Add(textBox1.Text);
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).GoBack();
-            button4.Enabled = false;
+            if (((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).CanGoBack)
+            {
+                ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Back();
+                //button4.Enabled = false;
+            }
+            
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).GoForward();
-            button5.Enabled = false;
+            if (((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).CanGoForward)
+            {
+                ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Forward();
+                //button5.Enabled = false;
+            }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            web = new WebBrowser();
-            web.ScriptErrorsSuppressed = true;
-            web.Dock = DockStyle.Fill;
-            web.Visible = true;
-            web.DocumentCompleted += Web_DocumentCompleted;
+            chrome = new ChromiumWebBrowser("");
+            chrome.Dock = DockStyle.Fill;
+            chrome.Visible = true;
+            //chrome.DocumentCompleted += Web_DocumentCompleted;
             tabControl1.TabPages.Add("New Tab");
             tabControl1.SelectTab(i);
-            tabControl1.SelectedTab.Controls.Add(web);
+            tabControl1.SelectedTab.Controls.Add(chrome);
             i += 1;
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate(textBox3.Text);
-            button3.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load(textBox3.Text);
+            //button3.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -106,21 +123,21 @@ namespace WindowsFormsApp1
 
         private void button6_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Refresh();
-            button6.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Refresh();
+            //button6.Enabled = false;
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://google.com");
-            button7.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://google.com");
+            //button7.Enabled = false;
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://google.com/search?q=" + textBox2.Text);
-            button8.Enabled = false;
-            textBox2.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://google.com/search?q=" + textBox2.Text);
+            //button8.Enabled = false;
+            //textBox2.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
                 toolStripComboBox1.Items.Add("Google: " + textBox2.Text);
@@ -129,8 +146,8 @@ namespace WindowsFormsApp1
 
         private void button9_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://youtube.com");
-            button9.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://youtube.com");
+            //button9.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
                 toolStripComboBox1.Items.Add("Shortcut: YouTube");
@@ -139,8 +156,8 @@ namespace WindowsFormsApp1
 
         private void button10_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://facebook.com");
-            button10.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://facebook.com");
+            //button10.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
                 toolStripComboBox1.Items.Add("Shortcut: Facebook");
@@ -149,8 +166,8 @@ namespace WindowsFormsApp1
 
         private void button11_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://reddit.com");
-            button11.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://reddit.com");
+            //button11.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
                 toolStripComboBox1.Items.Add("Shortcut: Reddit");
@@ -159,8 +176,8 @@ namespace WindowsFormsApp1
 
         private void button12_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://gmail.com");
-            button12.Enabled = false;
+            ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://gmail.com");
+            //button12.Enabled = false;
             if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
             {
                 toolStripComboBox1.Items.Add("Shortcut: Gmail");
@@ -169,6 +186,7 @@ namespace WindowsFormsApp1
 
         private void kilépésToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cef.Shutdown();
             this.Close();
         }
 
@@ -181,8 +199,8 @@ namespace WindowsFormsApp1
         {
             if (e.KeyChar == (char)ConsoleKey.Enter)
             {
-                ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate(textBox1.Text);
-                textBox1.Enabled = false;
+                ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load(textBox1.Text);
+                //textBox1.Enabled = false;
                 if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
                 {
                     toolStripComboBox1.Items.Add(textBox1.Text);
@@ -194,8 +212,8 @@ namespace WindowsFormsApp1
         {
             if (e.KeyChar == (char)ConsoleKey.Enter)
             {
-                ((WebBrowser)tabControl1.SelectedTab.Controls[0]).Navigate("https://google.com/search?q=" + textBox2.Text);
-                textBox2.Enabled = false;
+                ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://google.com/search?q=" + textBox2.Text);
+                //textBox2.Enabled = false;
                 if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
                 {
                     toolStripComboBox1.Items.Add("Google: " + textBox2.Text);
