@@ -29,6 +29,7 @@ namespace WindowsFormsApp1
             chrome = new ChromiumWebBrowser("https://google.com");
             chrome.Dock = DockStyle.Fill;
             chrome.AddressChanged += Chrome_AddressChanged;
+            chrome.TitleChanged += Chrome_TitleChanged;
             chrome.Visible = true;
             //chrome.Load = Web_DocumentCompleted;
             tabControl1.TabPages.Add("New Tab");
@@ -38,10 +39,19 @@ namespace WindowsFormsApp1
             ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load("https://google.com");
         }
 
-        private void Chrome_AddressChanged(object sender, AddressChangedEventArgs e)
+        private void Chrome_TitleChanged(object sender, TitleChangedEventArgs e)
         {
             Invoke(new MethodInvoker(() => {
+                tabControl1.SelectedTab.Text = e.Title;
+            }));
+        }
+
+        private void Chrome_AddressChanged(object sender, AddressChangedEventArgs e)
+        {
+
+            Invoke(new MethodInvoker(() => {
                 textBox1.Text = e.Address;
+                toolStripComboBox1.Items.Add(e.Address);
             }));
         }
 
@@ -71,10 +81,6 @@ namespace WindowsFormsApp1
             //textBox1.Text = ("");
             //button1.Enabled = false;
             //textBox1.Enabled = false;
-            if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
-            {
-                toolStripComboBox1.Items.Add(textBox1.Text);
-            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -201,10 +207,6 @@ namespace WindowsFormsApp1
             {
                 ((ChromiumWebBrowser)tabControl1.SelectedTab.Controls[0]).Load(textBox1.Text);
                 //textBox1.Enabled = false;
-                if (!toolStripComboBox1.Items.Contains(toolStripComboBox1.Text))
-                {
-                    toolStripComboBox1.Items.Add(textBox1.Text);
-                }
             }
         }
 
